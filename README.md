@@ -17,8 +17,8 @@ You may change whatever you like.
 You need to download some depdendencies.
 - [Node.js](https://nodejs.org/en)
 - [Vscode](https://code.visualstudio.com/)
-Now your going to have to run some commands
 
+### Install dependencies
 initialize the npm install.
 ```shell
 npm init -y
