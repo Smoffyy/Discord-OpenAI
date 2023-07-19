@@ -29,21 +29,21 @@ client.on('messageCreate', async (message) => {
     // If chatting in wrong channel, dont send message
     if (message.channel.id !== process.env.CHANNEL_ID) return;
     // Ignore messages started with such prefix (.env)
-    if (message.content.startsWith('!')) return;
+    if (message.content.startsWith(process.env.MESSAGE_EXCEPTION)) return;
 
     // What the Bot is based on
-    let conversationLog = [{ role: 'system', content: "You are an AI, who expresses their thoughts, opinions, and beliefs thoroughly."}]
+    let conversationLog = [{ role: 'system', content: process.env.PROMPT}]
 
     // Bot Typing Effect
     await message.channel.sendTyping();
 
     // Limit of previous messages it can remember
-    let prevMessages = await message.channel.messages.fetch({ limit: 30});
+    let prevMessages = await message.channel.messages.fetch({ limit: process.env.MESSAGE_MEMORY});
     prevMessages.reverse();
 
     // Conditions
     prevMessages.forEach((msg) => {
-        if (message.content.startsWith('!')) return;
+        if (message.content.startsWith(process.env.MESSAGE_EXCEPTION)) return;
         // Only answer people, not other bots
         if (message.author.id !== client.user.id && message.author.bot) return;
         // Only converse with such person instead of all
