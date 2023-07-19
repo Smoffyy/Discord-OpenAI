@@ -1,20 +1,20 @@
 require('dotenv/config');
-const { Client, IntentsBitField } = require('discord.js')
+const { Client, GatewayIntentBits } = require('discord.js');
 const { Configuration, OpenAIApi } = require('openai');
 
 const client = new Client({
     intents: [
         // What its allowed to see
-        IntentsBitField.Flags.Guilds,
-        IntentsBitField.Flags.Guilds.Messages,
-        IntentsBitField.Flags.Guilds.MessageContent,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
     ]
 })
 
 // Message when bot is online
 client.on('ready', () => {
     console.log("Client is online!")
-})
+});
 
 // Get the API Key
 const configuration = new Configuration({
@@ -29,31 +29,29 @@ client.on('messageCreate', async (message) => {
     // If chatting in wrong channel, dont send message
     if (message.channel.id !== process.env.CHANNEL_ID) return;
     // Ignore messages started with such prefix (.env)
-    //if (message.content.startsWith('!')) return;
-    if (message.content.startsWith(process.env.BOT_IGNORE)) return;
+    if (message.content.startsWith('!')) return;
+
     // What the Bot is bassed on
-    let conversationLog = [{ role: 'system', content: "You are an AI, which expresses its Opinions, Beliefs and Thoughts!"}]
+    let conversationLog = [{ role: 'system', content: "You are an an AI who shares your opinions, thoughts, and feelings thoroughly."}]
 
     // Bot Typing Effect
     await message.channel.sendTyping();
 
     // Limit of previous messages it can remember
-    //let prevMessages = await message.channel.messages.fetch({ limit: 15});
-    let prevMessages = await message.channel.messages.fetch({ limit: process.env.MEMORY_MESSAGE_LIMIT});
+    let prevMessages = await message.channel.messages.fetch({ limit: 15});
     prevMessages.reverse();
 
     // Conditions
     prevMessages.forEach((msg) => {
-        //if (message.content.startsWith('!')) return;
-        if (message.content.startsWith(process.env.BOT_IGNORE)) return;
+        if (message.content.startsWith('!')) return;
         // Only answer people, not other bots
-        if (msg.author.id !== client.user.id && message.author.bot) return;
+        if (message.author.id !== client.user.id && message.author.bot) return;
         // Only converse with such person instead of all
-        if (msg.author.id !== message.author.id) return;
+        if (message.author.id !== message.author.id) return;
 
         conversationLog.push({
             role: 'user',
-            content: msg.content,
+            content: message.content,
         });
     });
 
@@ -65,7 +63,7 @@ client.on('messageCreate', async (message) => {
     });
     //[0] is the first choice to pick
     message.reply(result.data.choices[0].message);
-})
+});
 
 // Get data from .env
-client.login(process.env.TOKEN)
+client.login(process.env.BOT_TOKEN)
