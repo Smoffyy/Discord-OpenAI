@@ -1,24 +1,8 @@
-### Discord (OpenAI) Chatbot
+# Discord (OpenAI) Chatbot
 This repository contains the basic code for an AI chatbot using OpenAI's api.
 You may change whatever you like.
 
-## How do I install and run this?
-You need to download some depdendencies.
-- [Node.js](https://nodejs.org/en)
-- [Vscode](https://code.visualstudio.com/)
-Remember to clone the repository.
-
-Now your going to have to run some commands
-
-initialize the npm install.
-```shell
-npm init -y
-```
-install discord.js, open, dotenv
-```shell
-npm install discord.js openai dotenv
-```
-# How do i create my bot so i can use this?
+# Creating your Bot
 1. You need to get [Discord](discord.com)
 2. Next you need to head over to the [Developer-Portal](https://discord.com/developers/applications), from there you need to create your bot and get your bots token
 3. Rename example.env to .env, and paste your bot token
@@ -29,8 +13,17 @@ npm install discord.js openai dotenv
 - Send messages
 - Read Message History
 
+## Installation
+You need to download some depdendencies.
+- [Node.js](https://nodejs.org/en)
+- [Vscode](https://code.visualstudio.com/)
+Now your going to have to run some commands
 
-
-permissions:
-send messages
-read messages history
+initialize the npm install.
+```shell
+npm init -y
+```
+install discord.js, open, dotenv
+```shell
+npm install discord.js openai dotenv
+```
