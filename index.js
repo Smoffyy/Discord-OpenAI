@@ -24,21 +24,21 @@ const openai = new OpenAIApi(configuration);
 
 // Get message data in terminal
 client.on('messageCreate', async (message) => {
-    //console.log(message)
+    // Dont reply to itself
     if (message.author.bot) return;
     // If chatting in wrong channel, dont send message
     if (message.channel.id !== process.env.CHANNEL_ID) return;
     // Ignore messages started with such prefix (.env)
     if (message.content.startsWith('!')) return;
 
-    // What the Bot is bassed on
-    let conversationLog = [{ role: 'system', content: "You are an an AI who shares your opinions, thoughts, and feelings thoroughly."}]
+    // What the Bot is based on
+    let conversationLog = [{ role: 'system', content: "You are an AI, who expresses their thoughts, opinions, and beliefs thoroughly."}]
 
     // Bot Typing Effect
     await message.channel.sendTyping();
 
     // Limit of previous messages it can remember
-    let prevMessages = await message.channel.messages.fetch({ limit: 15});
+    let prevMessages = await message.channel.messages.fetch({ limit: 30});
     prevMessages.reverse();
 
     // Conditions
